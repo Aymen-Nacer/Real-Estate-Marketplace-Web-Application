@@ -23,11 +23,8 @@ public class Listing {
     @Column(nullable = false)
     private String address;
 
-    @Column(name = "regular_price", nullable = false)
-    private Double regularPrice;
-
-    @Column(name = "discount_price", nullable = false)
-    private Double discountPrice;
+    @Column(name = "price", nullable = false)
+    private Double price;
 
     @Column(nullable = false)
     private Integer bathrooms;
@@ -41,11 +38,6 @@ public class Listing {
     @Column(nullable = false)
     private Boolean parking;
 
-    @Column(nullable = false)
-    private String type;
-
-    @Column(nullable = false)
-    private Boolean offer;
 
     @ElementCollection
     @CollectionTable(name = "listing_image_urls", joinColumns = @JoinColumn(name = "listing_id"))
@@ -93,21 +85,15 @@ public class Listing {
         this.address = address;
     }
 
-    public Double getRegularPrice() {
-        return regularPrice;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setRegularPrice(Double regularPrice) {
-        this.regularPrice = regularPrice;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
-    public Double getDiscountPrice() {
-        return discountPrice;
-    }
 
-    public void setDiscountPrice(Double discountPrice) {
-        this.discountPrice = discountPrice;
-    }
 
     public Integer getBathrooms() {
         return bathrooms;
@@ -141,21 +127,6 @@ public class Listing {
         this.parking = parking;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Boolean getOffer() {
-        return offer;
-    }
-
-    public void setOffer(Boolean offer) {
-        this.offer = offer;
-    }
 
     public List<String> getImageUrls() {
         return imageUrls;

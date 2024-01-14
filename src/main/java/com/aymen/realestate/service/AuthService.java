@@ -11,9 +11,6 @@ public class AuthService {
     public void signIn(String email, String password) {
     }
 
-    public void googleSignIn(String googleToken) {
-    }
-
     public void signOut() {
     }
 }
