@@ -37,7 +37,7 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        return listingRepository.findByUser(user);
+        return listingRepository.findByUserRef(user.getId().toString());
     }
 
     public User getUser(Long id) {
