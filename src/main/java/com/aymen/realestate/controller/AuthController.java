@@ -1,11 +1,18 @@
 package com.aymen.realestate.controller;
 
+import com.aymen.realestate.dto.AuthenticationResult;
 import com.aymen.realestate.dto.UserSigninRequest;
 import com.aymen.realestate.dto.UserSignupRequest;
 import com.aymen.realestate.service.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -16,6 +23,16 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<String> signUp(@RequestBody UserSignupRequest request) {
+        if (request == null){
+            System.out.println("request is null");
+        }
+        else {
+            System.out.println("request is not null");
+            System.out.println("request name " + request.getUsername());
+            System.out.println("request email " +  request.getEmail());
+            System.out.println("request password " + request.getPassword());
+
+        }
         try {
             authService.signUp(request.getUsername(), request.getEmail(), request.getPassword());
             return ResponseEntity.ok("User registered successfully");
@@ -25,21 +42,28 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<String> signIn(@RequestBody UserSigninRequest request) {
-        try {
-            authService.signIn(request.getEmail(), request.getPassword());
-            return ResponseEntity.ok("User authenticated successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(401).body("Invalid credentials");
+    public ResponseEntity<?> signIn(@RequestBody UserSigninRequest request, HttpServletResponse response) {
+        AuthenticationResult result = authService.signIn(request.getEmail(), request.getPassword());
+
+        if (result.isSuccess()) {
+            response.addCookie(result.getCookie());
+
+            Map<String, Object> responseBody = new HashMap<>();
+            responseBody.put("token", result.getToken());
+            responseBody.put("user", result.getUser());
+
+            return ResponseEntity.ok().body(responseBody);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result.getMessage());
         }
+
     }
 
     @GetMapping("/signout")
-    public ResponseEntity<String> signOut() {
-        authService.signOut();
-        return ResponseEntity.ok("User signed out successfully");
+    public ResponseEntity<String> signOut(HttpServletResponse response) {
+        authService.signOut(response);
+        return ResponseEntity.ok().body("Sign-out successful!");
     }
-
 
 
 
