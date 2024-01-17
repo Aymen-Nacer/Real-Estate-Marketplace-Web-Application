@@ -4,11 +4,11 @@ public class ListingUpdateRequest {
     private String name;
     private String description;
     private String address;
-    private int bedrooms;
-    private int bathrooms;
-    private double price;
-    private boolean parking;
-    private boolean furnished;
+    private Integer bedrooms;
+    private Integer bathrooms;
+    private Double price;
+    private Boolean parking;
+    private Boolean furnished;
 
     public String getName() {
         return name;
@@ -34,43 +34,43 @@ public class ListingUpdateRequest {
         this.address = address;
     }
 
-    public int getBedrooms() {
+    public Integer getBedrooms() {
         return bedrooms;
     }
 
-    public void setBedrooms(int bedrooms) {
+    public void setBedrooms(Integer bedrooms) {
         this.bedrooms = bedrooms;
     }
 
-    public int getBathrooms() {
+    public Integer getBathrooms() {
         return bathrooms;
     }
 
-    public void setBathrooms(int bathrooms) {
+    public void setBathrooms(Integer bathrooms) {
         this.bathrooms = bathrooms;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public boolean isParking() {
+    public Boolean isParking() {
         return parking;
     }
 
-    public void setParking(boolean parking) {
+    public void setParking(Boolean parking) {
         this.parking = parking;
     }
 
-    public boolean isFurnished() {
+    public Boolean isFurnished() {
         return furnished;
     }
 
-    public void setFurnished(boolean furnished) {
+    public void setFurnished(Boolean furnished) {
         this.furnished = furnished;
     }
 }

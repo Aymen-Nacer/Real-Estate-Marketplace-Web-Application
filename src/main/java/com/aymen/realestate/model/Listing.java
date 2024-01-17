@@ -53,6 +53,21 @@ public class Listing {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
+    public Listing() {
+        this.name = "Default Name";
+        this.description = "Default Description";
+        this.address = "123, Bouzereah 44521";
+        this.price = 0.0;
+        this.bathrooms = 0;
+        this.bedrooms = 0;
+        this.furnished = false;
+        this.parking = false;
+        this.imageUrls = List.of();
+        this.userRef = "-1";
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
+    }
+
     public Long getId() {
         return id;
     }
