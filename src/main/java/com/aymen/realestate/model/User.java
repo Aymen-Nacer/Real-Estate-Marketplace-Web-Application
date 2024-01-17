@@ -31,6 +31,20 @@ public class User {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
+    // No-argument constructor with default values
+    public User() {
+        this.avatar = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
+    }
+
+    public User(String username, String email, String password) {
+        this();
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
     public Long getId() {
         return id;
     }
@@ -86,4 +100,19 @@ public class User {
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }
+
+
