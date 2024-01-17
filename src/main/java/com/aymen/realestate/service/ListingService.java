@@ -2,10 +2,15 @@ package com.aymen.realestate.service;
 
 
 import com.aymen.realestate.dto.ListingCreateRequest;
+import com.aymen.realestate.dto.ListingGetQueryRequest;
 import com.aymen.realestate.dto.ListingUpdateRequest;
 import com.aymen.realestate.model.Listing;
 import com.aymen.realestate.repository.ListingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,15 +23,42 @@ public class ListingService {
 
     public Listing createListing(ListingCreateRequest request) {
         Listing listing = new Listing();
-        listing.setName(request.getName());
-        listing.setDescription(request.getDescription());
-        listing.setAddress(request.getAddress());
-        listing.setBedrooms(request.getBedrooms());
-        listing.setBathrooms(request.getBathrooms());
-        listing.setPrice(request.getPrice());
-        listing.setParking(request.isParking());
-        listing.setFurnished(request.isFurnished());
-        listing.setUserRef(request.getUserId());
+
+        if (request.getName() != null) {
+            listing.setName(request.getName());
+        }
+
+        if (request.getDescription() != null) {
+            listing.setDescription(request.getDescription());
+        }
+
+        if (request.getAddress() != null) {
+            listing.setAddress(request.getAddress());
+        }
+
+        if (request.getBedrooms() != null) {
+            listing.setBedrooms(request.getBedrooms());
+        }
+
+        if (request.getBathrooms() != null) {
+            listing.setBathrooms(request.getBathrooms());
+        }
+
+        if (request.getPrice() != null) {
+            listing.setPrice(request.getPrice());
+        }
+
+        if (request.isParking() != null) {
+            listing.setParking(request.isParking());
+        }
+
+        if (request.isFurnished() != null) {
+            listing.setFurnished(request.isFurnished());
+        }
+
+        if (request.getUserId() != null) {
+            listing.setUserRef(request.getUserId());
+        }
 
 
         return listingRepository.save(listing);
@@ -40,15 +72,38 @@ public class ListingService {
         Listing listing = listingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Listing not found"));
 
-        listing.setName(request.getName());
-        listing.setDescription(request.getDescription());
-        listing.setAddress(request.getAddress());
-        listing.setBedrooms(request.getBedrooms());
-        listing.setBathrooms(request.getBathrooms());
-        listing.setPrice(request.getPrice());
-        listing.setParking(request.isParking());
-        listing.setFurnished(request.isFurnished());
+        // Check if request attributes are not null before updating
+        if (request.getName() != null) {
+            listing.setName(request.getName());
+        }
 
+        if (request.getDescription() != null) {
+            listing.setDescription(request.getDescription());
+        }
+
+        if (request.getAddress() != null) {
+            listing.setAddress(request.getAddress());
+        }
+
+        if (request.getBedrooms() != null) {
+            listing.setBedrooms(request.getBedrooms());
+        }
+
+        if (request.getBathrooms() != null) {
+            listing.setBathrooms(request.getBathrooms());
+        }
+
+        if (request.getPrice() != null) {
+            listing.setPrice(request.getPrice());
+        }
+
+        if (request.isParking() != null) {
+            listing.setParking(request.isParking());
+        }
+
+        if (request.isFurnished() != null) {
+            listing.setFurnished(request.isFurnished());
+        }
         return listingRepository.save(listing);
     }
 
@@ -57,9 +112,13 @@ public class ListingService {
                 .orElseThrow(() -> new RuntimeException("Listing not found"));
     }
 
-    public List<Listing> getListings() {
-        return listingRepository.findAll();
+
+    public Page<Listing> searchAndFilterListings(ListingGetQueryRequest request, boolean[] furnishedValues, boolean[] parkingValues) {
+        Sort sort = Sort.by(request.getOrder().equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC, request.getSort());
+        Pageable pageable = PageRequest.of(request.getStartIndex() / request.getLimit(), request.getLimit() , sort);
+
+        return listingRepository.findByNameContainingIgnoreCaseAndFurnishedInAndParkingIn(
+                request.getSearchTerm(), furnishedValues, parkingValues, pageable
+        );
     }
-
-
 }
