@@ -48,13 +48,19 @@ public class AuthController {
         if (result.isSuccess()) {
             response.addCookie(result.getCookie());
 
-            Map<String, Object> responseBody = new HashMap<>();
-            responseBody.put("token", result.getToken());
-            responseBody.put("user", result.getUser());
+            Map<String, Object> successResponse = new HashMap<>();
+            successResponse.put("success", true);
+            successResponse.put("message", "Authentication successful");
+            successResponse.put("user", result.getUser());
 
-            return ResponseEntity.ok().body(responseBody);
+            return ResponseEntity.status(HttpStatus.OK).body(successResponse);
+
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(result.getMessage());
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", result.getMessage());
+
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
         }
 
     }

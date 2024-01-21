@@ -10,6 +10,7 @@ import java.util.List;
 @Table(name = "listings")
 public class Listing {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -62,8 +63,8 @@ public class Listing {
         this.bedrooms = 0;
         this.furnished = false;
         this.parking = false;
-        this.imageUrls = List.of();
-        this.userRef = "-1";
+        this.imageUrls = List.of("https://hardcode.pro/images/profile.png", "https://hardcode.pro/images/profile.png");
+        this.userRef = "1";
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
     }
@@ -173,5 +174,24 @@ public class Listing {
 
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Listing{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", address='" + address + '\'' +
+                ", price=" + price +
+                ", bathrooms=" + bathrooms +
+                ", bedrooms=" + bedrooms +
+                ", furnished=" + furnished +
+                ", parking=" + parking +
+                ", imageUrls=" + imageUrls +
+                ", userRef='" + userRef + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }

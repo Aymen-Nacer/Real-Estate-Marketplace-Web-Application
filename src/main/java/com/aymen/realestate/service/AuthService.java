@@ -58,9 +58,9 @@ public class AuthService {
 
             user.setPassword("");
 
-            return new AuthenticationResult(true, user, token, null, cookie);
+            return new AuthenticationResult(true, user, "success creating cookie", cookie);
         } else {
-            return new AuthenticationResult(false, null, null, "Wrong credentials!", null);
+            return new AuthenticationResult(false, null, "Wrong credentials!", null);
         }
     }
 

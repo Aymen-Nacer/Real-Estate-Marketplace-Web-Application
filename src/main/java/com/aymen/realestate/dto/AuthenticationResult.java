@@ -7,18 +7,14 @@ public class AuthenticationResult {
 
     private final boolean success;
     private final User user;
-    private final String token;
     private final String message;
-
-
 
     private final Cookie cookie;
 
 
-    public AuthenticationResult(boolean success, User user, String token, String message, Cookie cookie) {
+    public AuthenticationResult(boolean success, User user, String message, Cookie cookie) {
         this.success = success;
         this.user = user;
-        this.token = token;
         this.message = message;
         this.cookie = cookie;
 
@@ -32,9 +28,6 @@ public class AuthenticationResult {
         return user;
     }
 
-    public String getToken() {
-        return token;
-    }
 
     public String getMessage() {
         return message;

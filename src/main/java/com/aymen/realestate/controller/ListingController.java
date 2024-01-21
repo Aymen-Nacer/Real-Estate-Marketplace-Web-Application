@@ -75,7 +75,7 @@ public class ListingController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<Page<Listing>> searchAndFilterListings(  @RequestParam(required = false) String searchTerm,
+    public ResponseEntity<Listing[]> searchAndFilterListings(  @RequestParam(required = false) String searchTerm,
                                                                    @RequestParam(required = false) Boolean furnished,
                                                                    @RequestParam(required = false) Boolean parking,
                                                                    @RequestParam(required = false) String sort,
@@ -136,7 +136,7 @@ public class ListingController {
 
 
 
-            Page<Listing> searchResults = listingService.searchAndFilterListings(request, furnishedValues, parkingValues);
+            Listing[] searchResults = listingService.searchAndFilterListings(request, furnishedValues, parkingValues);
             return ResponseEntity.ok(searchResults);
         } catch (Exception e) {
             logger.error("Error searching and filtering listings", e);
