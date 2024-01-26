@@ -18,7 +18,7 @@ public class Listing {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1000)
     private String description;
 
     @Column(nullable = false)
@@ -45,8 +45,8 @@ public class Listing {
     @Column(name = "image_url")
     private List<String> imageUrls;
 
-    @Column(name = "user_ref", nullable = false)
-    private String userRef;
+    @Column(name = "userId", nullable = false)
+    private String userId;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
@@ -63,8 +63,8 @@ public class Listing {
         this.bedrooms = 0;
         this.furnished = false;
         this.parking = false;
-        this.imageUrls = List.of("https://hardcode.pro/images/profile.png", "https://hardcode.pro/images/profile.png");
-        this.userRef = "1";
+        this.imageUrls = List.of("https://i.imgur.com/n6B1Fuw.jpg", "https://i.imgur.com/n6B1Fuw.jpg");
+        this.userId = "1";
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
     }
@@ -152,12 +152,12 @@ public class Listing {
         this.imageUrls = imageUrls;
     }
 
-    public String getUserRef() {
-        return userRef;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserRef(String userRef) {
-        this.userRef = userRef;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public Instant getCreatedAt() {
@@ -189,7 +189,7 @@ public class Listing {
                 ", furnished=" + furnished +
                 ", parking=" + parking +
                 ", imageUrls=" + imageUrls +
-                ", userRef='" + userRef + '\'' +
+                ", userId='" + userId + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

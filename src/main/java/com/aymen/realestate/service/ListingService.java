@@ -57,7 +57,7 @@ public class ListingService {
         }
 
         if (request.getUserId() != null) {
-            listing.setUserRef(request.getUserId());
+            listing.setUserId(request.getUserId());
         }
 
 

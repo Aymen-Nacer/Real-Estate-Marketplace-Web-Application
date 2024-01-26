@@ -84,8 +84,17 @@ public class ListingController {
                                                                    @RequestParam(required = false) Integer startIndex) {
 
 
-        System.out.println("Search term received" + searchTerm);
-        System.out.println("furnished received" + furnished);
+        System.out.println("###########################################");
+        System.out.println("Search term received" + (searchTerm != null ? searchTerm + " type is " + searchTerm.getClass() : "null"));
+        System.out.println("Furnished received" + (furnished != null ? furnished + " type is " + furnished.getClass() : "null"));
+        System.out.println("Parking received" + (parking != null ? parking + " type is " + parking.getClass() : "null"));
+        System.out.println("Sort received" + (sort != null ? sort + " type is " + sort.getClass() : "null"));
+        System.out.println("Order received" + (order != null ? order + " type is " + order.getClass() : "null"));
+        System.out.println("Limit received" + (limit != null ? limit + " type is " + limit.getClass() : "null"));
+        System.out.println("Start index Received" + (startIndex != null ? startIndex + " type is " + startIndex.getClass() : "null"));
+        System.out.println("###########################################");
+
+
 
         ListingGetQueryRequest request = new ListingGetQueryRequest();
 
@@ -96,9 +105,15 @@ public class ListingController {
             if (limit == null || limit <= 0) {
                 request.setLimit(9);
             }
+            else {
+                request.setLimit(limit);
+            }
 
             if (startIndex == null || startIndex < 0) {
                 request.setStartIndex(0);
+            }
+            else {
+                request.setStartIndex(startIndex);
             }
 
 
@@ -124,10 +139,17 @@ public class ListingController {
             if (sort == null) {
                 request.setSort("createdAt");
             }
+            else {
+                request.setSort(sort);
+            }
 
             if (order == null) {
                 request.setOrder("desc");
             }
+            else  {
+                request.setOrder(order);
+            }
+
             System.out.println("#########################");
             System.out.println("request after setting is "  + request.toString());
             System.out.println("#########################");

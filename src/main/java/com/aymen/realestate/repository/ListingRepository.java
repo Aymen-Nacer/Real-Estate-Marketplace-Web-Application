@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface ListingRepository extends JpaRepository<Listing, Long> {
-    List<Listing> findByUserRef(String userId);
+    List<Listing> findByUserId(String userId);
 
     Page<Listing> findByNameContainingIgnoreCaseAndFurnishedInAndParkingIn(
             String searchTerm, boolean[] furnishedValues, boolean[] parkingValues, Pageable pageable

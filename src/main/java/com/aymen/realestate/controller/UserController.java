@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -38,6 +39,10 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable Long id) {
+        System.out.println("#########################");
+        System.out.println("id received is  "  + id );
+        System.out.println("#########################");
+
         User user = userService.getUser(id);
         return ResponseEntity.ok(user);
     }
