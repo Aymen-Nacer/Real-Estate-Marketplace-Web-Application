@@ -1,10 +1,10 @@
-FROM openjdk:11-jre-slim
-
+FROM maven:3-eclipse-temurin-17 AS build
 WORKDIR /app
+COPY . .
+RUN mvn clean package -Pprod -DskipTests
 
-# Copy the JAR file from the target directory to the /app directory in the container
-COPY target/real-estate-0.0.1-SNAPSHOT /app/your-application.jar
-
+FROM eclipse-temurin:17-alpine
+WORKDIR /app
+COPY --from=build /app/target/real-estate-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
-
-CMD ["java", "-jar", "your-application.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
