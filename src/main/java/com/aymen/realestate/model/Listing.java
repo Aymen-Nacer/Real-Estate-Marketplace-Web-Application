@@ -42,6 +42,7 @@ public class Listing {
 
     @ElementCollection
     @CollectionTable(name = "listing_image_urls", joinColumns = @JoinColumn(name = "listing_id"))
+    @OrderColumn(name = "image_order")
     @Column(name = "image_url")
     private List<String> imageUrls;
 
