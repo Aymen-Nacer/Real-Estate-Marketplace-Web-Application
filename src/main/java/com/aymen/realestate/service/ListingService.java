@@ -60,6 +60,11 @@ public class ListingService {
             listing.setUserId(request.getUserId());
         }
 
+        if (request.getImageUrls() !=null){
+            listing.setImageUrls(request.getImageUrls());
+        }
+
+
 
         return listingRepository.save(listing);
     }
@@ -104,17 +109,16 @@ public class ListingService {
         if (request.isFurnished() != null) {
             listing.setFurnished(request.isFurnished());
         }
+
+        if(request.getUrls() != null){
+            listing.setImageUrls(request.getUrls());
+        }
+
         return listingRepository.save(listing);
     }
 
     public Listing getListing(Long id) {
-        System.out.println("listing from the backend are#####################");
-        List<Listing> listingsList = listingRepository.findAll();
-        Listing[] listingsArray = listingsList.toArray(new Listing[0]);
 
-        for (Listing listing : listingsArray) {
-            System.out.println(listing.toString());
-        }
 
         return listingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Listing not found"));

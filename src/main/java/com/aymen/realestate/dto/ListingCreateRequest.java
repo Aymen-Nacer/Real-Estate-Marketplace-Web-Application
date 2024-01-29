@@ -1,5 +1,7 @@
 package com.aymen.realestate.dto;
 
+import java.util.List;
+
 public class ListingCreateRequest {
         private String name;
         private String description;
@@ -10,6 +12,25 @@ public class ListingCreateRequest {
         private Boolean parking;
         private Boolean furnished;
         private String userId;
+
+    private List<String> imageUrls;
+
+
+    public Boolean getParking() {
+        return parking;
+    }
+
+    public Boolean getFurnished() {
+        return furnished;
+    }
+
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
+    }
 
     public String getName() {
         return name;
