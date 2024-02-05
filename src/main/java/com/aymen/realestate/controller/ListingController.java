@@ -1,20 +1,22 @@
 package com.aymen.realestate.controller;
 
-
+import com.aymen.realestate.config.JwtTokenProvider;
+import com.aymen.realestate.dto.ApiResponse;
 import com.aymen.realestate.dto.ListingCreateRequest;
 import com.aymen.realestate.dto.ListingGetQueryRequest;
 import com.aymen.realestate.dto.ListingUpdateRequest;
 import com.aymen.realestate.model.Listing;
-import com.aymen.realestate.service.ListingService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.aymen.realestate.service.ListingService;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -24,98 +26,92 @@ public class ListingController {
     @Autowired
     private ListingService listingService;
 
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
     private static final Logger logger = LoggerFactory.getLogger(ListingController.class);
 
-
     @PostMapping("/create")
-    public ResponseEntity<Listing> createListing(@RequestBody ListingCreateRequest request) {
+    public ResponseEntity<ApiResponse> createListing(@RequestBody ListingCreateRequest request,
+                                           @CookieValue(name = "access_token") String accessTokenCookie) {
         try {
-            System.out.println("###########################################");
-            System.out.println("received request is: " + request.toString());
-            System.out.println("###########################################");
+            Jws<Claims> claimsJws = jwtTokenProvider.validateToken(accessTokenCookie);
             Listing createdListing = listingService.createListing(request);
-            return ResponseEntity.ok(createdListing);
+            return ResponseEntity.ok(new ApiResponse(true, null, List.of(createdListing)  ,  "Listing created successfully"));
+        } catch (JwtException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ApiResponse(false, null, null, "Token is not valid"));
         } catch (Exception e) {
-            logger.error("Error creating listing", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(false, null, null,  "Error creating listing"));
         }
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteListing(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse> deleteListing(@PathVariable Long id,
+                                           @CookieValue(name = "access_token") String accessTokenCookie) {
         try {
+            Jws<Claims> claimsJws = jwtTokenProvider.validateToken(accessTokenCookie);
             listingService.deleteListing(id);
-            return ResponseEntity.ok("Listing deleted successfully");
+            return ResponseEntity.ok(new ApiResponse(true, null, null,  "Listing deleted successfully"));
+        } catch (JwtException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ApiResponse(false, null, null, "Token is not valid"));
         } catch (Exception e) {
-            logger.error("Error deleting listing", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting listing");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(false, null, null, "Error deleting listing"));
         }
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Listing> updateListing(@PathVariable Long id, @RequestBody ListingUpdateRequest request) {
+    public ResponseEntity<ApiResponse> updateListing(@PathVariable Long id,
+                                           @RequestBody ListingUpdateRequest request,
+                                           @CookieValue(name = "access_token") String accessTokenCookie) {
         try {
+            Jws<Claims> claimsJws = jwtTokenProvider.validateToken(accessTokenCookie);
             Listing updatedListing = listingService.updateListing(id, request);
-            return ResponseEntity.ok(updatedListing);
+            return ResponseEntity.ok(new ApiResponse(true, null, List.of(updatedListing), "Listing updated successfully"));
+        } catch (JwtException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ApiResponse(false, null, null, "Token is not valid"));
         } catch (Exception e) {
-            logger.error("Error updating listing", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(false, null, null, "Error updating listing"));
         }
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Listing> getListing(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse> getListing(@PathVariable Long id) {
         try {
             Listing listing = listingService.getListing(id);
-            return ResponseEntity.ok(listing);
+            return ResponseEntity.ok(new ApiResponse(true,null, List.of(listing), "Listing retrieved successfully"));
         } catch (Exception e) {
-            logger.error("Error getting listing", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(false, null, null, "Error getting listing"));
         }
     }
 
     @GetMapping("/get")
-    public ResponseEntity<Listing[]> searchAndFilterListings(  @RequestParam(required = false) String searchTerm,
-                                                                   @RequestParam(required = false) Boolean furnished,
-                                                                   @RequestParam(required = false) Boolean parking,
-                                                                   @RequestParam(required = false) String sort,
-                                                                   @RequestParam(required = false) String order,
-                                                                   @RequestParam(required = false) Integer limit,
-                                                                   @RequestParam(required = false) Integer startIndex) {
-
-
-        System.out.println("###########################################");
-        System.out.println("Search term received" + (searchTerm != null ? searchTerm + " type is " + searchTerm.getClass() : "null"));
-        System.out.println("Furnished received" + (furnished != null ? furnished + " type is " + furnished.getClass() : "null"));
-        System.out.println("Parking received" + (parking != null ? parking + " type is " + parking.getClass() : "null"));
-        System.out.println("Sort received" + (sort != null ? sort + " type is " + sort.getClass() : "null"));
-        System.out.println("Order received" + (order != null ? order + " type is " + order.getClass() : "null"));
-        System.out.println("Limit received" + (limit != null ? limit + " type is " + limit.getClass() : "null"));
-        System.out.println("Start index Received" + (startIndex != null ? startIndex + " type is " + startIndex.getClass() : "null"));
-        System.out.println("###########################################");
-
-
+    public ResponseEntity<?> searchAndFilterListings(@RequestParam(required = false) String searchTerm,
+                                                     @RequestParam(required = false) Boolean furnished,
+                                                     @RequestParam(required = false) Boolean parking,
+                                                     @RequestParam(required = false) String sort,
+                                                     @RequestParam(required = false) String order,
+                                                     @RequestParam(required = false) Integer limit,
+                                                     @RequestParam(required = false) Integer startIndex
+                                                   ) {
 
         ListingGetQueryRequest request = new ListingGetQueryRequest();
 
         try {
+
             boolean[] furnishedValues;
             boolean[] parkingValues;
 
             if (limit == null || limit <= 0) {
                 request.setLimit(9);
-            }
-            else {
+            } else {
                 request.setLimit(limit);
             }
 
             if (startIndex == null || startIndex < 0) {
                 request.setStartIndex(0);
-            }
-            else {
+            } else {
                 request.setStartIndex(startIndex);
             }
-
 
             if (furnished == null || !furnished) {
                 furnishedValues = new boolean[]{true, false};
@@ -131,41 +127,28 @@ public class ListingController {
 
             if (searchTerm == null) {
                 request.setSearchTerm("");
-            }
-            else {
+            } else {
                 request.setSearchTerm(searchTerm);
             }
 
             if (sort == null) {
                 request.setSort("createdAt");
-            }
-            else {
+            } else {
                 request.setSort(sort);
             }
 
             if (order == null) {
                 request.setOrder("desc");
-            }
-            else  {
+            } else {
                 request.setOrder(order);
             }
 
-            System.out.println("#########################");
-            System.out.println("request after setting is "  + request.toString());
-            System.out.println("#########################");
-            System.out.println("furnished values is" + Arrays.toString(furnishedValues));
-            System.out.println("parking values is" + Arrays.toString(parkingValues));
-
-
-
             Listing[] searchResults = listingService.searchAndFilterListings(request, furnishedValues, parkingValues);
-            return ResponseEntity.ok(searchResults);
+            return ResponseEntity.ok(new ApiResponse(true, null,  List.of(searchResults), "Listings retrieved successfully"));
+
         } catch (Exception e) {
             logger.error("Error searching and filtering listings", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(false, null, null,  "Error searching and filtering listings"));
         }
-
-
     }
-
 }

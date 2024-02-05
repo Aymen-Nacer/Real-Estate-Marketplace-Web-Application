@@ -1,7 +1,7 @@
 package com.aymen.realestate.service;
 
 import com.aymen.realestate.config.JwtTokenProvider;
-import com.aymen.realestate.dto.AuthenticationResult;
+import com.aymen.realestate.dto.SignInResponse;
 import com.aymen.realestate.model.User;
 import com.aymen.realestate.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
@@ -43,14 +43,17 @@ public class AuthService {
     }
 
 
-    public AuthenticationResult signIn(String email, String password) {
+    public SignInResponse signIn(String email, String password) {
+
         User user = userRepository.findByEmail(email);
+
+
 
         if (user != null && passwordEncoder.matches(password, user.getPassword())) {
 
 
-
             String token = jwtTokenProvider.generateToken(user);
+
 
             Cookie cookie = new Cookie("access_token", token);
             cookie.setHttpOnly(true);
@@ -58,9 +61,12 @@ public class AuthService {
 
             user.setPassword("");
 
-            return new AuthenticationResult(true, user, "success creating cookie", cookie);
+
+
+
+            return new SignInResponse(true, "success creating cookie",  user , cookie);
         } else {
-            return new AuthenticationResult(false, null, "Wrong credentials!", null);
+            return new SignInResponse(false, "Wrong credentials!",  null , null);
         }
     }
 
