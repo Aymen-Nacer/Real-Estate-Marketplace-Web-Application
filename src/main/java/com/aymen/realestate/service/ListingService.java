@@ -60,10 +60,9 @@ public class ListingService {
             listing.setUserId(request.getUserId());
         }
 
-        if (request.getImageUrls() !=null){
+        if (request.getImageUrls() != null) {
             listing.setImageUrls(request.getImageUrls());
         }
-
 
 
         return listingRepository.save(listing);
@@ -110,7 +109,7 @@ public class ListingService {
             listing.setFurnished(request.isFurnished());
         }
 
-        if(request.getUrls() != null){
+        if (request.getUrls() != null) {
             listing.setImageUrls(request.getUrls());
         }
 
@@ -126,14 +125,24 @@ public class ListingService {
 
 
     public Listing[] searchAndFilterListings(ListingGetQueryRequest request, boolean[] furnishedValues, boolean[] parkingValues) {
+
+
         Sort sort = Sort.by(request.getOrder().equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC, request.getSort());
-        Pageable pageable = PageRequest.of(request.getStartIndex() / request.getLimit(), request.getLimit() , sort);
+        int startIndex = Math.max(request.getStartIndex(), 0);
+        int pageSize = Math.max(request.getLimit(), 1);
+
+
+        int pageIndex = startIndex / pageSize;
+        int pageOffset = startIndex % pageSize;
+
+        Pageable pageable = PageRequest.of(pageIndex, pageSize, sort);
 
         Page<Listing> pageResult = listingRepository.findByNameContainingIgnoreCaseAndFurnishedInAndParkingIn(
                 request.getSearchTerm(), furnishedValues, parkingValues, pageable
         );
 
-        List<Listing> listings = pageResult.getContent();
+        List<Listing> listings = pageResult.getContent().subList(pageOffset, pageResult.getContent().size());
+
         return listings.toArray(new Listing[0]);
     }
 }

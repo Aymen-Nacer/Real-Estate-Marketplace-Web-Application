@@ -16,5 +16,4 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
     Page<Listing> findByNameContainingIgnoreCaseAndFurnishedInAndParkingIn(
             String searchTerm, boolean[] furnishedValues, boolean[] parkingValues, Pageable pageable
     );
-
 }

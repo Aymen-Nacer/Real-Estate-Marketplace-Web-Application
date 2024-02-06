@@ -101,7 +101,7 @@ public class ListingController {
             boolean[] furnishedValues;
             boolean[] parkingValues;
 
-            if (limit == null || limit <= 0) {
+            if (limit == null) {
                 request.setLimit(9);
             } else {
                 request.setLimit(limit);
@@ -142,6 +142,12 @@ public class ListingController {
             } else {
                 request.setOrder(order);
             }
+
+            System.out.println("#######################");
+            System.out.println("request is "  + request.toString());
+
+            System.out.println("#######################");
+
 
             Listing[] searchResults = listingService.searchAndFilterListings(request, furnishedValues, parkingValues);
             return ResponseEntity.ok(new ApiResponse(true, null,  List.of(searchResults), "Listings retrieved successfully"));
