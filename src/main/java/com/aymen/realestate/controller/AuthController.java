@@ -1,9 +1,7 @@
 package com.aymen.realestate.controller;
 
-import com.aymen.realestate.dto.ApiResponse;
-import com.aymen.realestate.dto.UserSigninRequest;
-import com.aymen.realestate.dto.UserSignupRequest;
-import com.aymen.realestate.dto.SignInResponse;
+import com.aymen.realestate.dto.*;
+import com.aymen.realestate.model.User;
 import com.aymen.realestate.service.AuthService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +35,29 @@ public class AuthController {
             return ResponseEntity.ok(new ApiResponse(true, signInResponse.user(), null, "Authentication successful"));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse(false, null, null, signInResponse.message()));
+        }
+    }
+
+    @PostMapping("/googleAuth")
+    public ResponseEntity<ApiResponse> googleAuth(@RequestBody GoogleAuthRequest googleAuthRequest, HttpServletResponse response) {
+
+
+        try {
+            SignInResponse signInResponse = authService.googleAuth(
+                    googleAuthRequest.getEmail(),
+                    googleAuthRequest.getUsername(),
+                    googleAuthRequest.getAvatar()
+            );
+
+            if (signInResponse.success()) {
+                response.addCookie(signInResponse.cookie());
+                return ResponseEntity.ok(new ApiResponse(true, signInResponse.user(), null, "Authentication successful"));
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse(false, null, null, signInResponse.message()));
+            }
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 

@@ -45,6 +45,15 @@ public class User {
         this.password = password;
     }
 
+    public User(String username, String email, String password, String avatar) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.avatar = avatar;
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
+    }
+
     public Long getId() {
         return id;
     }

@@ -1,5 +1,6 @@
 package com.aymen.realestate.service;
 
+import com.aymen.realestate.dto.ApiResponse;
 import com.aymen.realestate.dto.UserUpdateRequest;
 import com.aymen.realestate.model.Listing;
 import com.aymen.realestate.model.User;
@@ -44,6 +45,7 @@ public class UserService {
         return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
+
 
 
 }
