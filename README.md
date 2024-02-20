@@ -49,29 +49,43 @@ This repository contains the code for a comprehensive Real Estate Marketplace Ap
 ## Screenshots
 
 ### Hero Section
-![Hero Section](https://github.com/Aymen-Nacer/Sorting-Algorithms-Visualizer/assets/67188835/e6f0c16d-0aa4-4f1f-9d3c-e26f0d934dc8)
+<img src="https://github.com/Aymen-Nacer/Sorting-Algorithms-Visualizer/assets/67188835/e6f0c16d-0aa4-4f1f-9d3c-e26f0d934dc8" alt="Hero Section" width="800" height="400">
+
+---
 
 ### Home Page
-![Home Page](https://github.com/Aymen-Nacer/Sorting-Algorithms-Visualizer/assets/67188835/3c1a8bb3-02c3-4676-b087-153a5601664a)
+<img src="https://github.com/Aymen-Nacer/Sorting-Algorithms-Visualizer/assets/67188835/3c1a8bb3-02c3-4676-b087-153a5601664a" alt="Home Page" width="800" height="400">
+
+---
 
 ### Search Page
-![Search Page](https://github.com/Aymen-Nacer/Sorting-Algorithms-Visualizer/assets/67188835/19943110-c12f-443f-aec8-56c043e4a2ce)
+<img src="https://github.com/Aymen-Nacer/Sorting-Algorithms-Visualizer/assets/67188835/19943110-c12f-443f-aec8-56c043e4a2ce" alt="Search Page" width="800" height="400">
+
+---
 
 ### Property Details
-![Property Details](https://github.com/Aymen-Nacer/Sorting-Algorithms-Visualizer/assets/67188835/a2d4d9a5-ae6e-479e-8ea7-458429446fd4)
+<img src="https://github.com/Aymen-Nacer/Sorting-Algorithms-Visualizer/assets/67188835/a2d4d9a5-ae6e-479e-8ea7-458429446fd4" alt="Property Details" width="800" height="400">
+
+---
 
 ### Profile
-![Profile](https://github.com/Aymen-Nacer/Sorting-Algorithms-Visualizer/assets/67188835/057bcf9a-f3d5-4d95-ac0b-79fb6ddd67ef)
+<img src="https://github.com/Aymen-Nacer/Sorting-Algorithms-Visualizer/assets/67188835/057bcf9a-f3d5-4d95-ac0b-79fb6ddd67ef" alt="Profile" width="800" height="400">
+
+---
 
 ### Sign Up
-![Sign Up](https://github.com/Aymen-Nacer/Sorting-Algorithms-Visualizer/assets/67188835/76fcc96e-6663-48f1-8ed4-905016dc6d15)
+<img src="https://github.com/Aymen-Nacer/Sorting-Algorithms-Visualizer/assets/67188835/76fcc96e-6663-48f1-8ed4-905016dc6d15" alt="Sign Up" width="800" height="400">
+
+---
 
 ### Login
-![Login](https://github.com/Aymen-Nacer/Sorting-Algorithms-Visualizer/assets/67188835/c3628363-761e-4c65-8b33-c23b1bc3d40f)
+<img src="https://github.com/Aymen-Nacer/Sorting-Algorithms-Visualizer/assets/67188835/c3628363-761e-4c65-8b33-c23b1bc3d40f" alt="Login" width="800" height="400">
+
+---
 
 ### Add Property Page
-![Add Property Page](https://github.com/Aymen-Nacer/Sorting-Algorithms-Visualizer/assets/67188835/8885cca3-4c37-4ffa-bd2a-4eb5ab1c1b5e)
+<img src="https://github.com/Aymen-Nacer/Sorting-Algorithms-Visualizer/assets/67188835/8885cca3-4c37-4ffa-bd2a-4eb5ab1c1b5e" alt="Add Property Page" width="800" height="400">
 
-
+---
 
 
